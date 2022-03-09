@@ -1,14 +1,15 @@
-import hashlib
+import time
+import string
+import random
+
 from Crypto import Random
 from Crypto.Cipher import DES
 from Crypto.Random import get_random_bytes
 from base64 import b64encode, b64decode
-
-class AESCipher(object):
+start_time = time.time()
+class DESCipher(object):
     def __init__(self, key):
         self.block_size = DES.block_size
-        # print(self.block_size)
-        # self.key = hashlib.sha256(key.encode()).digest()
         self.key = key
 
     def encrypt(self, plain_text):
@@ -39,11 +40,13 @@ class AESCipher(object):
         return plain_text[:-ord(last_character)]
 
 if __name__ == "__main__":
+    
     secret_key = get_random_bytes(8)
     print(secret_key)
-    
-    print("hel")
-    enc = AESCipher(secret_key)
-    encrypted_text = enc.encrypt('avaneesh')
+    enc = DESCipher(secret_key)
+    # res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 80000000))
+    res= '245'
+    encrypted_text = enc.encrypt(res)
     print(encrypted_text)
     print(enc.decrypt(encrypted_text))
+    print("--- %s seconds ---" % (time.time() - start_time))
