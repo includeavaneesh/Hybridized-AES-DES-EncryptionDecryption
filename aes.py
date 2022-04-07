@@ -40,11 +40,12 @@ class AESCipher(object):
         return plain_text[:-ord(last_character)]
 
 if __name__ == "__main__":
+    print(Random.new())
     secret_key = get_random_bytes(16)
     enc = AESCipher(secret_key)
 
-
-    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 80000000))
+    
+    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 8))
 
     encrypted_text = enc.encrypt(res)
     # print(encrypted_text)
