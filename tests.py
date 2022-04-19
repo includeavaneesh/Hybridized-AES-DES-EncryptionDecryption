@@ -1,4 +1,5 @@
 import io
+import binascii
 import os
 import time
 import string
@@ -109,20 +110,23 @@ class HybridAES_DES(object):
 if __name__ == "__main__":
 
     # Test 2: Image Analysis
-    
+    # with open("test_image.png","rb") as imageFile:
+    #     resImage = imageFile.read()
 
+    # resImage = binascii.hexlify(resImage)
+    # print(resImage[:20])
     # Test 1: Encryption-Decryption Time Analysis
     datasize = []
     time_des = []
     time_aes = []
     time_Hybrid = []
-    i = 10
+    i = 100
     m=0
-    while i<=100:
+    while i<=100000:
         
         print("----------------")
         m+=1
-        i=i*100
+        i=i*10
         datasize.append(m)
         res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = i*8))
         # print(res)
@@ -160,19 +164,19 @@ if __name__ == "__main__":
             f.write(enc_Hybrid.decrypt(encrypted_text_Hybrid))
         end_time_Hybrid = time.time()
       
-        time_Hybrid.append(end_time_Hybrid - start_time_Hybrid)
+        time_Hybrid.append((end_time_Hybrid - start_time_Hybrid)/1000)
 
 
 
-    # print(time_aes)
-    # print(time_des)
-    # print(time_Hybrid)
+    print(time_aes)
+    print(time_des)
+    print(time_Hybrid)
     print(datasize)
 
-    # plt.plot(datasize,time_aes,label = "AES")
-    # plt.plot(datasize,time_des,label = "DES")
-    # plt.plot(datasize,time_Hybrid,label = "Hybrid")
-    # plt.xlabel("Size of Data ( Power of Mbit)")
-    # plt.ylabel("Time Taken to Encrypt and Decrypt")
-    # plt.legend()
-    # plt.show()
+    plt.plot(datasize,time_aes,label = "AES")
+    plt.plot(datasize,time_des,label = "DES")
+    plt.plot(datasize,time_Hybrid,label = "Hybrid")
+    plt.xlabel("Size of Data ( Power of Mbit)")
+    plt.ylabel("Time Taken to Encrypt and Decrypt")
+    plt.legend()
+    plt.show()
